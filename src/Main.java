@@ -8,15 +8,13 @@ public class Main {
         String fullCsv = "campeonato-brasileiro-full.csv";
 
         Repositorio repositorio = new Repositorio();
+        ResultadosService resultadosService = new ResultadosService();
 
         try {
 
             List<Partida> partidas = repositorio.carregarPartidas(fullCsv);
 
-            var partida0 = partidas.getFirst();
-
-            System.out.println("A partida foi entre " + partida0.getTimeMandante() + " e " + partida0.getTimeVisitante());
-            System.out.println("A placar foi " + partida0.getGolsMandante() + " x " + partida0.getGolsVisitante());
+            resultadosService.timeComMaisVitoriasNoAno(partidas,2008);
 
 
         } catch (IOException e) {

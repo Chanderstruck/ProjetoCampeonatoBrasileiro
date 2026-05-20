@@ -1,3 +1,5 @@
+import java.util.Optional;
+
 public class Partida {
 
     private final String idPartida;
@@ -54,5 +56,11 @@ public class Partida {
 
     public int getTotalGols() {
         return golsMandante + golsVisitante;
+    }
+
+    public Optional<String> getVencedor() {
+        if (golsMandante > golsVisitante) return Optional.of(timeMandante);
+        if (golsVisitante > golsMandante) return Optional.of(timeVisitante);
+        return Optional.empty(); // empate
     }
 }
