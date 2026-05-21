@@ -108,6 +108,42 @@ public class Repositorio {
         return gols;
     }
 
+    // Mapear colunas campeonato-brasileiro-cartoes.csv
+    // "partida_id" 0
+    // ,"rodata" 1
+    // ,"clube" 2
+    // ,"cartao" 3
+    // ,"atleta" 4
+    // ,"num_camisa" 5
+    // ,"posicao" 6
+    // ,"minuto" 7
+    private static final int IDX_CARTAO_ID_PARTIDA = 0;
+    private static final int IDX_CARTAO_JOGADOR = 4;
+    private static final int IDX_CARTAO_TIPO = 3;
+
+    public List<Cartao> carregarCartoes(String arquivoCSV) throws IOException {
+        List<Cartao> cartoes = new ArrayList<>();
+
+        try (BufferedReader reader = abrirRecursoComoReader(arquivoCSV)) {
+            String header = reader.readLine();
+            if (header == null) return cartoes;
+
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                String[] colunas = linha.split(SEPARADOR, -1);
+                if (colunas.length <= IDX_CARTAO_JOGADOR) continue;
+
+                String idPartida = sanitizar(colunas[IDX_CARTAO_ID_PARTIDA]);
+                String jogador = sanitizar(colunas[IDX_CARTAO_JOGADOR]);
+                String tipoRaw = sanitizar(colunas[IDX_CARTAO_TIPO]);
+                TipoCartao tipoCartao = TipoCartao.fromString(tipoRaw);
+
+                cartoes.add(new Cartao(idPartida, jogador, tipoCartao));
+            }
+        }
+        return cartoes;
+    }
+
     private BufferedReader abrirRecursoComoReader(String nomeArquivo) {
         InputStream in = Repositorio.class.getResourceAsStream("/" + nomeArquivo);
         if (in == null) {

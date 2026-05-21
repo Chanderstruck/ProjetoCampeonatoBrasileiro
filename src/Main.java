@@ -7,6 +7,7 @@ public class Main {
 
         String fullCsv = "campeonato-brasileiro-full.csv";
         String golsCsv = "campeonato-brasileiro-gols.csv";
+        String cartoesCsv = "campeonato-brasileiro-cartoes.csv";
 
         Repositorio repositorio = new Repositorio();
         ResultadosService resultadosService = new ResultadosService();
@@ -15,6 +16,7 @@ public class Main {
 
             List<Partida> partidas = repositorio.carregarPartidas(fullCsv);
             List<Gol> gols = repositorio.carregarGols(golsCsv);
+            List<Cartao> cartoes = repositorio.carregarCartoes(cartoesCsv);
 
             resultadosService.timeComMaisVitoriasNoAno(partidas,2008);
 
