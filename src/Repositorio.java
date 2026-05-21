@@ -14,7 +14,7 @@ public class Repositorio {
     private static final String SEPARADOR = ",";
 
     //Mapear colunas campeonato-brasileiro-full.csv
-    //"ID" 0
+    // "ID" 0
     // ,"rodata" 1
     // ,"data" 2
     // ,"hora" 3
@@ -72,6 +72,40 @@ public class Repositorio {
             }
         }
         return partidas;
+    }
+
+    // Mapear colunas campeonato-brasileiro-gols.csv
+    // "partida_id" 0
+    // ,"rodata" 1
+    // ,"clube" 2
+    // ,"atleta" 3
+    // ,"minuto" 4
+    // ,"tipo_de_gol" 5
+    private static final int IDX_GOL_ID_PARTIDA = 0;
+    private static final int IDX_GOL_JOGADOR = 3;
+    private static final int IDX_GOL_TIPO = 5;
+
+    public List<Gol> carregarGols(String arquivoCSV) throws IOException {
+        List<Gol> gols = new ArrayList<>();
+
+        try (BufferedReader reader = abrirRecursoComoReader(arquivoCSV)) {
+            String header = reader.readLine(); // cabeçalho
+            if (header == null) return gols;
+
+            String linha;
+            while ((linha = reader.readLine()) != null) {
+                String[] colunas = linha.split(SEPARADOR, -1);
+                if (colunas.length <= IDX_GOL_TIPO) continue;
+
+                String idPartida = sanitizar(colunas[IDX_GOL_ID_PARTIDA]);
+                String jogador = sanitizar(colunas[IDX_GOL_JOGADOR]);
+                String tipoRaw = sanitizar(colunas[IDX_GOL_TIPO]);
+                TipoGol tipo = TipoGol.fromString(tipoRaw);
+
+                gols.add(new Gol(idPartida, jogador, tipo));
+            }
+        }
+        return gols;
     }
 
     private BufferedReader abrirRecursoComoReader(String nomeArquivo) {

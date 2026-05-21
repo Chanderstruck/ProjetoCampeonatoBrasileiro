@@ -21,7 +21,5 @@ public class ResultadosService {
                     + " foi o " + resultado.get().getKey()
                     + " com " + resultado.get().getValue() + " vitórias");
         }
-
-
     }
 }
