@@ -3,7 +3,7 @@ import java.util.Optional;
 public class Partida {
 
     private final String idPartida;
-    private final int ano;
+    private final Integer ano;
     private final String estado;
     private final String timeMandante;
     private final String timeVisitante;
@@ -11,7 +11,7 @@ public class Partida {
     private final int golsVisitante;
 
     public Partida(String idPartida,
-                   int ano,
+                   Integer ano,
                    String estado,
                    String timeMandante,
                    String timeVisitante,
@@ -30,7 +30,7 @@ public class Partida {
         return idPartida;
     }
 
-    public int getAno() {
+    public Integer getAno() {
         return ano;
     }
 
