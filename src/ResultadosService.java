@@ -5,7 +5,7 @@ import java.util.stream.Collectors;
 
 public class ResultadosService {
 
-    public void timeComMaisVitoriasNoAno(List<Partida> partidas, int ano) {
+    public void timeComMaisVitoriasNoAno(List<Partida> partidas, Integer ano) {
 
         Optional<Map.Entry<String, Long>> resultado = partidas.stream()
                 .filter(p -> p.getAno() == ano)

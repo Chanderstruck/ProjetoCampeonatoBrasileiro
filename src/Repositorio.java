@@ -31,13 +31,13 @@ public class Repositorio {
     // ,"mandante_Estado" 14
     // ,"visitante_Estado" 15
 
-    private static final int IDX_ID_PARTIDA = 0;
-    private static final int IDX_ANO = 2;
-    private static final int IDX_ESTADO = 14;
-    private static final int IDX_TIME_MANDANTE = 4;
-    private static final int IDX_TIME_VISITANTE = 5;
-    private static final int IDX_GOLS_MANDANTE = 12;
-    private static final int IDX_GOLS_VISITANTE = 13;
+    private static final Integer IDX_ID_PARTIDA = 0;
+    private static final Integer IDX_ANO = 2;
+    private static final Integer IDX_ESTADO = 14;
+    private static final Integer IDX_TIME_MANDANTE = 4;
+    private static final Integer IDX_TIME_VISITANTE = 5;
+    private static final Integer IDX_GOLS_MANDANTE = 12;
+    private static final Integer IDX_GOLS_VISITANTE = 13;
 
     public List<Partida> carregarPartidas(String arquivoCSV) throws IOException {
         List<Partida> partidas = new ArrayList<>();
@@ -58,12 +58,12 @@ public class Repositorio {
 
                 String idPartida = sanitizar(colunas[IDX_ID_PARTIDA]);
                 LocalDate data = LocalDate.parse(sanitizar(colunas[IDX_ANO]), BR_FORMATTER);
-                int ano = data.getYear();
+                Integer ano = data.getYear();
                 String estado = sanitizar(colunas[IDX_ESTADO]);
                 String mandante = sanitizar(colunas[IDX_TIME_MANDANTE]);
                 String visitante = sanitizar(colunas[IDX_TIME_VISITANTE]);
-                int golsMandante = parseIntSafe(sanitizar(colunas[IDX_GOLS_MANDANTE]));
-                int golsVisitante = parseIntSafe(sanitizar(colunas[IDX_GOLS_VISITANTE]));
+                Integer golsMandante = parseIntSafe(sanitizar(colunas[IDX_GOLS_MANDANTE]));
+                Integer golsVisitante = parseIntSafe(sanitizar(colunas[IDX_GOLS_VISITANTE]));
 
                 partidas.add(new Partida(
                         idPartida, ano, estado, mandante, visitante,
@@ -81,9 +81,9 @@ public class Repositorio {
     // ,"atleta" 3
     // ,"minuto" 4
     // ,"tipo_de_gol" 5
-    private static final int IDX_GOL_ID_PARTIDA = 0;
-    private static final int IDX_GOL_JOGADOR = 3;
-    private static final int IDX_GOL_TIPO = 5;
+    private static final Integer IDX_GOL_ID_PARTIDA = 0;
+    private static final Integer IDX_GOL_JOGADOR = 3;
+    private static final Integer IDX_GOL_TIPO = 5;
 
     public List<Gol> carregarGols(String arquivoCSV) throws IOException {
         List<Gol> gols = new ArrayList<>();
@@ -117,9 +117,9 @@ public class Repositorio {
     // ,"num_camisa" 5
     // ,"posicao" 6
     // ,"minuto" 7
-    private static final int IDX_CARTAO_ID_PARTIDA = 0;
-    private static final int IDX_CARTAO_JOGADOR = 4;
-    private static final int IDX_CARTAO_TIPO = 3;
+    private static final Integer IDX_CARTAO_ID_PARTIDA = 0;
+    private static final Integer IDX_CARTAO_JOGADOR = 4;
+    private static final Integer IDX_CARTAO_TIPO = 3;
 
     public List<Cartao> carregarCartoes(String arquivoCSV) throws IOException {
         List<Cartao> cartoes = new ArrayList<>();
@@ -159,7 +159,7 @@ public class Repositorio {
         return s.replaceAll("^\"|\"$", "").trim();
     }
 
-    private static int parseIntSafe(String s) {
+    private static Integer parseIntSafe(String s) {
         try {
             return Integer.parseInt(s.trim());
         } catch (Exception e) {

@@ -7,16 +7,16 @@ public class Partida {
     private final String estado;
     private final String timeMandante;
     private final String timeVisitante;
-    private final int golsMandante;
-    private final int golsVisitante;
+    private final Integer golsMandante;
+    private final Integer golsVisitante;
 
     public Partida(String idPartida,
                    Integer ano,
                    String estado,
                    String timeMandante,
                    String timeVisitante,
-                   int golsMandante,
-                   int golsVisitante) {
+                   Integer golsMandante,
+                   Integer golsVisitante) {
         this.idPartida = idPartida;
         this.ano = ano;
         this.estado = estado;
