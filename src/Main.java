@@ -73,6 +73,7 @@ public class Main {
 
                     case 8:
                         System.out.println("\nPlacar da partida com mais gols:");
+                        resultadosService.partidaComMaisGols(partidas);
                         break;
 
                     case -1:

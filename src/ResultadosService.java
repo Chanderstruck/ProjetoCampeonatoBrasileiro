@@ -1,3 +1,4 @@
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -5,21 +6,48 @@ import java.util.stream.Collectors;
 
 public class ResultadosService {
 
-    public void timeComMaisVitoriasNoAno(List<Partida> partidas, Integer ano) {
+    public void timeComMaisVitoriasNoAno(List<Partida> partidas, int ano) {
 
-        Optional<Map.Entry<String, Long>> resultado = partidas.stream()
+        Map<String, Long> contagemVitorias = partidas.stream()
                 .filter(p -> p.getAno() == ano)
                 .flatMap(p -> p.getVencedor().stream())
-                .collect(Collectors.groupingBy(v -> v, Collectors.counting()))
-                .entrySet().stream()
-                .max(Map.Entry.comparingByValue());
+                .collect(Collectors.groupingBy(v -> v, Collectors.counting()));
 
-        if (resultado.isEmpty()){
+        Long maxVitorias = contagemVitorias.values().stream()
+                .max(Long::compare)
+                .orElse(0L);
+
+        List<Map.Entry<String, Long>> timesEmpatados = contagemVitorias.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(maxVitorias))
+                .collect(Collectors.toList());
+
+        if (timesEmpatados.isEmpty()){
             System.out.println("Nenhum vencedor encontrado para o ano informado");
         } else {
-            System.out.println("O time com mais vitórias em " + ano
-                    + " foi o " + resultado.get().getKey()
-                    + " com " + resultado.get().getValue() + " vitórias");
+            timesEmpatados.forEach( time ->
+                    System.out.println(time.getKey() + " (" + time.getValue() + " vitórias)")
+            );
         }
+    }
+
+    public void partidaComMaisGols (List<Partida> partidas) {
+
+        Optional<Partida> resultado = partidas.stream()
+                .max(Comparator.comparingLong(Partida::getTotalGols));
+
+        resultado.ifPresentOrElse(
+                p -> {
+                    String placar = String.format("Partida ID %s: %s %d x %d %s (Total de %d gols)",
+                            p.getIdPartida(),
+                            p.getTimeMandante(),
+                            p.getGolsMandante(),
+                            p.getGolsVisitante(),
+                            p.getTimeVisitante(),
+                            p.getTotalGols()
+                            );
+                    System.out.println(placar);
+                },
+                () -> System.out.println("Nenhuma partida encontrada")
+        );
     }
 }
