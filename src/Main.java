@@ -53,14 +53,17 @@ public class Main {
 
                     case 3:
                         System.out.println("\nJogador que mais fez gols:");
+                        resultadosService.jogadorQueFezMaisGol(gols);
                         break;
 
                     case 4:
                         System.out.println("\nJogador que mais fez gols de pênaltis:");
+                        resultadosService.jogadorFezMaisGolPorTipo(gols, TipoGol.PENALTI);
                         break;
 
                     case 5:
                         System.out.println("\nJogador que mais fez gols contra:");
+                        resultadosService.jogadorFezMaisGolPorTipo(gols, TipoGol.CONTRA);
                         break;
 
                     case 6:

@@ -1,7 +1,4 @@
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class ResultadosService {
@@ -49,5 +46,56 @@ public class ResultadosService {
                 },
                 () -> System.out.println("Nenhuma partida encontrada")
         );
+    }
+
+    public void jogadorQueFezMaisGol(List<Gol> gols) {
+        Map<String, Long> contagemGols =
+        gols.stream()
+
+                .map(g -> g.getJogador())
+                .collect(Collectors.groupingBy(v -> v, Collectors.counting()));
+
+        Long maxGols = contagemGols.values().stream()
+                .max(Long::compare)
+                .orElse(0L);
+
+        List<Map.Entry<String, Long>> jogadoresEmpatados = contagemGols.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(maxGols))
+                .collect(Collectors.toList());
+
+        if (jogadoresEmpatados.isEmpty()){
+            System.out.println("Nenhum jogador encontrado");
+        } else {
+            jogadoresEmpatados.forEach( jogador ->
+                    System.out.println(jogador.getKey() + " (" + jogador.getValue() + " gols)")
+            );
+        }
+
+
+    }
+
+    public void jogadorFezMaisGolPorTipo(List<Gol> gols, TipoGol tipoGol) {
+        Map<String, Long> contagemGols = gols.stream()
+                .filter(g -> g.getTipoGol().equals(tipoGol))
+                .map(g -> g.getJogador())
+                .collect(Collectors.groupingBy(v -> v, Collectors.counting()));
+
+        Long maxGols = contagemGols.values().stream()
+                .max(Long::compare)
+                .orElse(0L);
+
+        List<Map.Entry<String, Long>> jogadoresEmpatados = contagemGols.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(maxGols))
+                .collect(Collectors.toList());
+
+        if (jogadoresEmpatados.isEmpty()){
+            System.out.println("Nenhum jogador encontrado para tipo de gol" + tipoGol.name());
+        } else {
+            jogadoresEmpatados.forEach( jogador ->
+                    System.out.println(jogador.getKey() + " (" + jogador.getValue() + " gols " + tipoGol.name() + ") " )
+            );
+        }
+
+
     }
 }
