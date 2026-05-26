@@ -49,6 +49,7 @@ public class Main {
 
                     case 2:
                         System.out.println("\nEstado que teve menos jogos entre 2003 e 2022:");
+                        resultadosService.estadoComMenosJogosPorPeriodo(partidas,2003,2022);
                         break;
 
                     case 3:

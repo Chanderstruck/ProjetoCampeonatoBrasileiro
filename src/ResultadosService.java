@@ -135,4 +135,28 @@ public class ResultadosService {
                         maiorQuantidade + " cartões."
         );
     }
+
+    public void estadoComMenosJogosPorPeriodo(List<Partida> partidas, int anoInicio, int anoFim) {
+
+        Map<String,Long> contagemPartidas = partidas.stream()
+                .filter(p -> p.getAno() >= anoInicio && p.getAno() <= anoFim)
+                .map(p -> p.getEstado())
+                .collect(Collectors.groupingBy( p -> p, Collectors.counting()));
+
+        Long minPartidas = contagemPartidas.values().stream()
+                .min(Long::compareTo)
+                .orElse(0L);
+
+        List<Map.Entry<String, Long>> estadosEmpatados = contagemPartidas.entrySet().stream()
+                .filter(entry -> entry.getValue().equals(minPartidas))
+                .collect(Collectors.toList());
+
+        if (estadosEmpatados.isEmpty()) {
+            System.out.println("Nenhum Estado encontrado para o período informado");
+        } else {
+            estadosEmpatados.forEach(estado ->
+                    System.out.println(estado.getKey() + " (" + estado.getValue() + " partidas)")
+            );
+        }
+    }
 }
