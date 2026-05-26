@@ -95,7 +95,44 @@ public class ResultadosService {
                     System.out.println(jogador.getKey() + " (" + jogador.getValue() + " gols " + tipoGol.name() + ") " )
             );
         }
+    }
 
+    public void jogadorComMaisCartoesPorTipo(List<Cartao> cartoes, TipoCartao tipoCartao) {
 
+        Map<String, Integer> quantidadeCartoes = new HashMap<>();
+
+        for (Cartao cartao : cartoes) {
+
+            if (cartao.getTipoCartao().equals(tipoCartao)) {
+
+                String jogador = cartao.getJogador();
+
+                quantidadeCartoes.put(
+                        jogador,
+                        quantidadeCartoes.getOrDefault(jogador, 0) + 1
+                );
+            }
+        }
+
+        if (quantidadeCartoes.isEmpty()) {
+            System.out.println("Nenhum cartão " + tipoCartao.name() + " encontrado.");
+            return;
+        }
+        String jogadorMaisCartoes = "";
+        int maiorQuantidade = 0;
+
+        for (Map.Entry<String, Integer> entry : quantidadeCartoes.entrySet()) {
+
+            if (entry.getValue() > maiorQuantidade) {
+
+                jogadorMaisCartoes = entry.getKey();
+                maiorQuantidade = entry.getValue();
+            }
+        }
+
+        System.out.println(
+                jogadorMaisCartoes + " recebeu " +
+                        maiorQuantidade + " cartões."
+        );
     }
 }

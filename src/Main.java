@@ -68,10 +68,12 @@ public class Main {
 
                     case 6:
                         System.out.println("\nJogador que mais recebeu cartões amarelos:");
+                        resultadosService.jogadorComMaisCartoesPorTipo(cartoes, TipoCartao.AMARELO);
                         break;
 
                     case 7:
                         System.out.println("\nJogador que mais recebeu cartões vermelhos:");
+                        resultadosService.jogadorComMaisCartoesPorTipo(cartoes, TipoCartao.VERMELHO);
                         break;
 
                     case 8:
